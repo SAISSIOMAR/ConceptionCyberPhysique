@@ -1,12 +1,12 @@
 # ConceptionCyberPhysique
 
-- Les noms des étudiants du groupe : 
-Marouane Boubia
-Omar Saissi
-Ayman ElFiguigui
-Youssef ElGarmit
+- Les noms des étudiants du groupe :
+  - Marouane Boubia
+  - Omar Saissi
+  - Ayman ElFiguigui
+  - Youssef ElGarmit
 
-- Numéro du groupe 
+- Numéro du groupe : 
 
 
 - Le titre temporaire du service ambiant (il pourra changer en fonction de l'évolution du sujet). 
