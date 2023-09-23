@@ -2,7 +2,7 @@
 
 ## Étudiants
 - canal slack : si5-cdscp-soundguard
-- lien [Lien Canal Slack](https://app.slack.com/client/TMW14CTRD/C05TN5MAU0K)
+- [Canal Slack](https://app.slack.com/client/TMW14CTRD/C05TN5MAU0K)
 
 ## Étudiants
 - Marouane Boubia
