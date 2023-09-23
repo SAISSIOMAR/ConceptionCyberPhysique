@@ -62,10 +62,6 @@ SoundGuard repose sur une architecture à trois niveaux :
    - Description : Le capteur de son Grove est un module de microphone qui peut également être utilisé avec un Raspberry Pi pour détecter les niveaux de son dans l'environnement.
    - API : Pour utiliser le capteur de son Grove avec un Raspberry Pi, nous pouvons le connecter à un Grove Base Hat ou à un GrovePi et utiliser des bibliothèques Python pour lire les données du capteur.
 
-### Interface Web/API pour l'Affichage des Données :
-- Créez une interface web sur le Raspberry Pi pour afficher les niveaux sonores en temps réel et les alertes.
-- Les utilisateurs pourront accéder à cette interface depuis un navigateur pour surveiller le niveau sonore de la salle.
-
 ### Capteur de bruit :
 - Module microphone Electret : Un module de capteur microphonique de base adapté à la détection des sons.
 
@@ -76,6 +72,10 @@ SoundGuard repose sur une architecture à trois niveaux :
 
 ### Connectivité :
 - Carte SD : comme nous utilisons un Raspberry Pi, nous aurons besoin d'une carte SD pour stocker le système d'exploitation et notre code.
+
+### Interface Web/API pour l'Affichage des Données :
+- Créez une interface web sur le Raspberry Pi pour afficher les niveaux sonores en temps réel et les alertes.
+- Les utilisateurs pourront accéder à cette interface depuis un navigateur pour surveiller le niveau sonore de la salle.
 
 ## Exemple d’utilisation de notre projet
 
