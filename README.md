@@ -69,6 +69,9 @@ SoundGuard repose sur une architecture à trois niveaux :
 
 - **Carte SD :**
   - Description : Comme nous utilisons un Raspberry Pi, nous aurons besoin d'une carte SD pour stocker le système d'exploitation et notre code.
+    
+- **Connectivité à Internet :**
+  - Pour permettre à notre Raspberry Pi de se connecter à Internet et d'afficher les données sur l'interface API.
 
 ### Interface Web/API pour l'Affichage des Données :
 - Créez une interface web sur le Raspberry Pi pour afficher les niveaux sonores en temps réel et les alertes.
