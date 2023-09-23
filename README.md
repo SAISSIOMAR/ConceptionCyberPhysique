@@ -3,7 +3,7 @@
 ## Étudiants
 - Marouane Boubia
 - Omar Saissi
-- Ayman ElFiguigui
+- Aymane ElFiguigui
 - Youssef ElGarmit
 
 ## Numéro du groupe : [Insérez le numéro du groupe ici]
