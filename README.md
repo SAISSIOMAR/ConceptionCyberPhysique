@@ -8,8 +8,7 @@
 
 - Numéro du groupe : 
 
-
--Titre temporaire du service ambiant : 
+- Titre temporaire du service ambiant : 
 SoundGuard : Système Intelligent de Gestion du Bruit
 
 - Type d'Environnement physique de mise en œuvre : 
