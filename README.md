@@ -86,7 +86,7 @@ SoundGuard repose sur une architecture à trois niveaux :
 
 **Bibliothèques :**
 - RPi.GPIO : Pour contrôler les broches GPIO de la Raspberry Pi.
-- python-mqtt : Pour la communication MQTT avec les capteurs (facultatif, en fonction de votre configuration).
+- python-mqtt : Pour la communication MQTT avec les capteurs.
 
 **Pseudo code (python) :**
 
