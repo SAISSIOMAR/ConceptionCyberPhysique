@@ -67,7 +67,6 @@ SoundGuard repose sur une architecture à trois niveaux :
    - Description : Un mini-ordinateur capable de traiter les données des capteurs, d'exécuter un serveur et de gérer des tâches plus complexes.
    - API : [RaspBerry Pi Documentation](https://www.raspberrypi.com/documentation/pico-sdk/)
 
-### Connectivité :
 - **Carte SD :**
   - Description : Comme nous utilisons un Raspberry Pi, nous aurons besoin d'une carte SD pour stocker le système d'exploitation et notre code.
 
