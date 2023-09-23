@@ -42,12 +42,11 @@ Optimisation des Performances : Le bruit excessif dans les environnements éduca
 - Analyse de l'existant : 
 Avant de concevoir SoundGuard, une recherche bibliographique approfondie a été effectuée pour recueillir des informations sur les systèmes existants de gestion du bruit, y compris ceux utilisant des capteurs IoT et des systèmes de surveillance acoustique. Il a été constaté que de tels systèmes existent, mais leur automatisation et leur intégration complètes sont limitées. SoundGuard vise à combler cette lacune en fournissant une solution intelligente et complète de gestion du bruit.
 
-https://noiseaware.com/ 
+Link : https://noiseaware.com/
+
 Description : NoiseAware est une entreprise qui propose un système de gestion du bruit basé sur IoT pour les propriétaires de locations de vacances et les gestionnaires de biens immobiliers. Bien que ce système soit principalement conçu pour les locations de vacances, il illustre l'utilisation de l'IoT pour la surveillance du bruit dans un environnement de travail (dans ce cas, un environnement de travail locatif).
 Capteurs de bruit IoT : NoiseAware fournit des capteurs de bruit qui sont installés dans les propriétés locatives. Ces capteurs surveillent en permanence les niveaux de bruit.
 Alertes en temps réel : Lorsque les niveaux de bruit dépassent un seuil prédéfini, le système envoie des alertes en temps réel aux propriétaires ou aux gestionnaires de biens, leur permettant de prendre des mesures immédiates..
-
-https://fr.mute-labs.com/search/fr-cabine-de-reunion?utm_source=google&utm_medium=search&utm_term=insonorisation%20salle%20de%20r%C3%A9union&utm_content=146593166535&utm_campaign=18548851591&device=c&gad=1&gclid=CjwKCAjwmbqoBhAgEiwACIjzEBdy2ULk67kbUVI8iKtmRXZRfE-zSlIxc7MiOQtm2ThaKMlaQJyoRRoCeQEQAvD_BwE
 
 - Schéma Architectural de Principe :
 SoundGuard repose sur une architecture à trois niveaux :
@@ -57,11 +56,10 @@ Dispositifs de Contrôle : Lorsque les niveaux de bruit dépassent les seuils r�
 
 
 
-
-
-
-
 - Éléments techniques pour lever les premiers verrous techniques
+
+Matériel nécessaire :
+
 NeoPixel LEDs :
 Description : Les NeoPixels (ou WS2812B) sont des LEDs RVB programmables individuellement qui peuvent être chaînées ensemble pour créer des effets lumineux.
 API : Pour contrôler les NeoPixels, la bibliothèque "Adafruit NeoPixel" est couramment utilisée
@@ -71,38 +69,28 @@ Exemple de code : https://learn.adafruit.com/adafruit-neopixel-uberguide/arduino
 Arduino avec un Capteur de Son KY-038 :
 Description : Le capteur de son KY-038 est un module de microphone pour Arduino qui peut être utilisé pour détecter des niveaux sonores.
 API : Arduino propose des bibliothèques pour lire les données du capteur de son KY-038. https://sensorkit.joy-it.net/fr/sensors/ky-038
+
 Grove - Sound Sensor
 Description : Le capteur de son Grove est un module de microphone qui peut également être utilisé avec un Raspberry Pi pour détecter les niveaux de son dans l'environnement.
 API : Pour utiliser le capteur de son Grove avec un Raspberry Pi, nous pouvons le connecter à un Grove Base Hat ou à un GrovePi et utiliser des bibliothèques Python pour lire les données du capteur. 
 
 
-interface Web/API pour l'Affichage des Données :
+Interface Web/API pour l'Affichage des Données :
 Créez une interface web sur le Raspberry Pi pour afficher les niveaux sonores en temps réel et les alertes.
 Les utilisateurs pourront accéder à cette interface depuis un navigateur pour surveiller le niveau sonore de la salle.
 
 
-
-
-
-matériel nécessaire : 
-
 Capteur de bruit :
 Module microphone Electret : Un module de capteur microphonique de base adapté à la détection des sons.
-
-
-
 Unité de traitement :
 
 Raspberry Pi (par exemple, Raspberry Pi 4) : Un mini-ordinateur capable de traiter les données des capteurs, d'exécuter un serveur et de gérer des tâches plus complexes. 
-
-
 
 Bande LED RVB
 
 Connectivité :
 
 Carte SD : comme nous utilisons un Raspberry Pi, nous aurons besoin d'une carte SD pour stocker le système d'exploitation et notre code.
-.
 
 
 - Exemple d’utilisation de notre projet : 
