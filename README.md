@@ -23,13 +23,15 @@ SoundGuard est une solution de gestion du bruit novatrice, exploitant des LEDs p
 
 - Motivations : 
 Le projet SoundGuard s'avère être une réponse indispensable à plusieurs enjeux cruciaux :
+
 Conformité Réglementaire : SoundGuard est conçu en stricte conformité avec la réglementation française en matière de bien-être au travail et de qualité de l'environnement. Il garantit que le niveau sonore demeure en permanence en dessous du seuil réglementaire de 85 décibels. Ainsi, il permet aux écoles et aux entreprises de se conformer pleinement aux lois et réglementations en vigueur, évitant ainsi les sanctions potentielles.
+
 Le Code du Travail français, notamment les articles R4222-1 à R4222-21 concernant les niveaux sonores au travail.
 Les réglementations en matière de bruit au travail établies par l'Agence nationale de sécurité sanitaire de l'alimentation, de l'environnement et du travail (ANSES).
+
 Amélioration du Bien-être : Dans un monde où le bruit excessif est devenu une source majeure de stress et de distraction, SoundGuard répond à une demande croissante d'espaces de travail et de salles de classe offrant un environnement calme et propice à la concentration, à l'apprentissage et à la productivité. En créant des environnements plus silencieux, le projet vise à améliorer significativement le bien-être et la qualité de vie des utilisateurs.
 "Noise Pollution and Health Effects" de l'Organisation mondiale de la santé (OMS).
 Les travaux de la Direction Générale de la Santé (DGS) en France concernant la santé environnementale.
-
 
 Optimisation des Performances : Le bruit excessif dans les environnements éducatifs et professionnels a été associé à une diminution des performances cognitives, de la productivité et de la créativité. SoundGuard aide à optimiser les performances des élèves et des employés en créant des conditions idéales pour l'apprentissage et le travail, favorisant ainsi une meilleure concentration et des résultats plus élevés.
 "The Effects of Noise on Cognitive Performance" publié dans le journal Noise & Health. (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6901841/)
