@@ -152,5 +152,5 @@ except KeyboardInterrupt:
 
 
 - [Capteur de décibel](https://fr.aliexpress.com/item/1005002390552167.html?src=google&src=google&albch=shopping&acnt=248-630-5778&slnk=&plac=&mtctp=&albbt=Google_7_shopping&gclsrc=aw.ds&albagn=888888&isSmbAutoCall=false&needSmbHouyi=false&src=google&albch=shopping&acnt=248-630-5778&slnk=&plac=&mtctp=&albbt=Google_7_shopping&gclsrc=aw.ds&albagn=888888&ds_e_adid=&ds_e_matchtype=&ds_e_device=c&ds_e_network=x&ds_e_product_group_id=&ds_e_product_id=fr1005002390552167&ds_e_product_merchant_id=107869342&ds_e_product_country=FR&ds_e_product_language=fr&ds_e_product_channel=online&ds_e_product_store_id=&ds_url_v=2&albcp=20180143332&albag=&isSmbAutoCall=false&needSmbHouyi=false&gclid=CjwKCAjwmbqoBhAgEiwACIjzEAdJqVVfmVnuVpzGOZZXPORav_Md49N7f30Ay1b5U72Ub49fL9PHfxoCRlgQAvD_BwE&aff_fcid=c2d6fd7753ce4401b9831a2fc909b565-1695487910096-08064-UneMJZVf&aff_fsk=UneMJZVf&aff_platform=aaf&sk=UneMJZVf&aff_trace_key=c2d6fd7753ce4401b9831a2fc909b565-1695487910096-08064-UneMJZVf&terminal_id=a9c2e50af74242debcab62a32ce9cbe4&afSmartRedirect=y)
-  - Description : Lien vers une boutique en ligne où vous pouvez trouver des capteurs de décibels pour votre projet.
+  - Description : Lien vers une boutique en ligne où l'on peut trouver des capteurs de décibels pour ce projet.
 
