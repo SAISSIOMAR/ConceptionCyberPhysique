@@ -54,6 +54,10 @@ SoundGuard repose sur une architecture à trois niveaux :
    - API : Pour contrôler les NeoPixels, la bibliothèque "Adafruit NeoPixel" est couramment utilisée.
    - Exemple de code : [Adafruit NeoPixel Uberguide](https://learn.adafruit.com/adafruit-neopixel-uberguide/arduino-library-use)
 
+- **LEDs Grove :**
+   - Description : Si nous utilisons un Grove Base Hat ou un GrovePi avec une Raspberry Pi, nous pouvons choisir des LEDs Grove qui se connectent facilement aux ports Grove. Ces LEDs sont faciles à utiliser avec ces systèmes.
+   - API : [Grove Ecosystem Introduction](https://wiki.seeedstudio.com/Grove_System/)
+
 - **Arduino avec un Capteur de Son KY-038 :**
    - Description : Le capteur de son KY-038 est un module de microphone pour Arduino qui peut être utilisé pour détecter des niveaux sonores.
    - API : Arduino propose des bibliothèques pour lire les données du capteur de son KY-038. [Bibliothèque Arduino pour KY-038](https://sensorkit.joy-it.net/fr/sensors/ky-038)
@@ -67,8 +71,6 @@ SoundGuard repose sur une architecture à trois niveaux :
 
 ### Unité de traitement :
 - Raspberry Pi (par exemple, Raspberry Pi 4) : Un mini-ordinateur capable de traiter les données des capteurs, d'exécuter un serveur et de gérer des tâches plus complexes.
-
-### Bande LED RVB
 
 ### Connectivité :
 - Carte SD : comme nous utilisons un Raspberry Pi, nous aurons besoin d'une carte SD pour stocker le système d'exploitation et notre code.
