@@ -54,9 +54,9 @@ SoundGuard repose sur une architecture à trois niveaux :
    - API : Pour contrôler les NeoPixels, la bibliothèque "Adafruit NeoPixel" est couramment utilisée.
    - Exemple de code : [Adafruit NeoPixel Uberguide](https://learn.adafruit.com/adafruit-neopixel-uberguide/arduino-library-use)
 
-- **Grove - Sound Sensor :**
+- **Grove - Sound/Loudness Sensor :**
    - Description : Le capteur de son Grove est un module de microphone qui peut également être utilisé avec un Raspberry Pi pour détecter les niveaux de son dans l'environnement.
-   - API : Pour utiliser le capteur de son Grove avec un Raspberry Pi, nous pouvons le connecter à un Grove Base Hat ou à un GrovePi et utiliser des bibliothèques Python pour lire les données du capteur.
+   - API : Pour utiliser le capteur de son Grove avec un Raspberry Pi, nous pouvons le connecter à un Grove Base Hat ou à un GrovePi et utiliser des bibliothèques Python pour lire les données du capteur. [](https://wiki.seeedstudio.com/Grove-Loudness_Sensor/)
 
 - **LEDs Grove :**
    - Description : Si nous utilisons un Grove Base Hat ou un GrovePi avec une Raspberry Pi, nous pouvons choisir des LEDs Grove qui se connectent facilement aux ports Grove. Ces LEDs sont faciles à utiliser avec ces systèmes.
