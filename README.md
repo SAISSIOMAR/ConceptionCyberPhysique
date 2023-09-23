@@ -70,8 +70,24 @@ SoundGuard repose sur une architecture à trois niveaux :
 - **Carte SD :**
   - Description : Comme nous utilisons un Raspberry Pi, nous aurons besoin d'une carte SD pour stocker le système d'exploitation et notre code.
     
-- **Connectivité à Internet :**
-  - Pour permettre à notre Raspberry Pi de se connecter à Internet et d'afficher les données sur l'interface API.
+### Connectivité
+
+Pour stocker les données et permettre l'affichage sur un tableau de bord, notre système utilise les éléments suivants :
+
+**Serveur de Données :**
+- Description : Un serveur de données est mis en place sur le Raspberry Pi pour collecter les informations des capteurs et les stocker dans une base de données.
+- Méthode de Stockage : Les données sont stockées dans une base de données locale, ce qui permet un accès rapide et une utilisation efficace des données en temps réel.
+
+**Tableau de Bord en Temps Réel :**
+- Description : Un tableau de bord web interactif est développé sur le Raspberry Pi pour afficher les niveaux sonores en temps réel et les alertes.
+- Technologie Utilisée : Nous utilisons des technologies web courantes telles que HTML, CSS, JavaScript, et des bibliothèques comme Chart.js pour créer des graphiques dynamiques.
+- Communication avec le Serveur : Le tableau de bord communique avec le serveur de données pour récupérer les données en temps réel à l'aide d'une API REST.
+
+**Accès Utilisateur :**
+- Description : Les utilisateurs peuvent accéder au tableau de bord depuis un navigateur web standard sur n'importe quel appareil connecté au même réseau que le Raspberry Pi.
+- Interface Conviviale : L'interface utilisateur est conviviale et intuitive, permettant aux utilisateurs de surveiller facilement le niveau sonore de la salle.
+
+L'ensemble de ce système garantit que les données sont collectées, stockées et affichées de manière transparente pour une gestion efficace du bruit dans l'environnement d'enseignement ou de travail.
 
 ### Interface Web/API pour l'Affichage des Données :
 - Créez une interface web sur le Raspberry Pi pour afficher les niveaux sonores en temps réel et les alertes.
