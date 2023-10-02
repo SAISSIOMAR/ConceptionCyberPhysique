@@ -13,7 +13,7 @@
 ## Numéro du groupe : 5
 
 ## Titre temporaire du service ambiant
-AirCare : Système Connecté de Gestion de la Qualité de l'Air dans les Bureaux et les Établissements Éducatifs
+AirGuard : Système Connecté de Gestion de la Qualité de l'Air dans les Bureaux et les Établissements Éducatifs
 
 ## Environnements de mise en œuvre
 - Salle de classe
