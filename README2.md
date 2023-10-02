@@ -146,7 +146,7 @@ L'ensemble de ce système garantit que les données sont collectées, stockées 
 
 **Matériel nécessaire :**
 - Raspberry Pi (n'importe quel modèle compatible avec GPIO)
-- Capteur de bruit
+- Capteur de qualité d'air
 - LEDs (deux LEDs connectées aux broches GPIO de la Raspberry Pi)
 
 **Bibliothèques :**
