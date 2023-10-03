@@ -1,7 +1,7 @@
 # Conception Cyber-Physique
 
 ## Liens
-- Nom du canal Slack : si5-cdscp-soundguard &rarr; [Canal Slack](https://app.slack.com/client/TMW14CTRD/C05TN5MAU0K)
+- Nom du canal Slack : si5-cdscp-5 &rarr; [Canal Slack](https://app.slack.com/client/TMW14CTRD/C05TN5MAU0K)
 - GitHub &rarr; [Lien GitHub](https://github.com/SAISSIOMAR/ConceptionCyberPhysique/)
 
 ## Étudiants
