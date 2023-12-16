@@ -11,7 +11,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -19,6 +22,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -219,8 +223,35 @@ class MainActivity : ComponentActivity() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Received Message:")
-            Text(text = message)
+            // Display the received message
+
+            // Display the question
+            Spacer(modifier = Modifier.height(16.dp)) // Add some spacing
+            Text(text = "Who won the World Cup?")
+
+            // Display answer options with checkboxes
+            AnswerOption("Brazil")
+            AnswerOption("Germany")
+            AnswerOption("Italy")
+            AnswerOption("Argentina")
         }
     }
+
+    @Composable
+    fun AnswerOption(answer: String) {
+        var isChecked by remember { mutableStateOf(false) }
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(8.dp)
+        ) {
+            Checkbox(
+                checked = isChecked,
+                onCheckedChange = { isChecked = it }
+            )
+            Spacer(modifier = Modifier.width(8.dp)) // Add spacing between checkbox and text
+            Text(text = answer)
+        }
+    }
+
 }
