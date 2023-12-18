@@ -10,6 +10,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -31,8 +33,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -44,6 +48,7 @@ import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
 import com.example.myapplication.presentation.theme.MyApplicationTheme
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
@@ -56,15 +61,18 @@ import okio.ByteString
 
 
 
+
 class MainActivity : ComponentActivity() {
     private lateinit var webSocket: WebSocket
     private var receivedMessage by mutableStateOf("")
     private val channelId = "WebSocketChannel"
     private val notificationId = 1
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        showNotification("AirGuard", "hello")
+
+
 
         setContent {
             MyApplicationTheme {
@@ -75,7 +83,10 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("second_screen") { backStackEntry ->
                         val message = backStackEntry.arguments?.getString("message") ?: ""
-                        SecondScreen(message)
+                        SecondScreen(navController, message)
+                    }
+                    composable("third_screen") {
+                        ThirdScreen(navController)
                     }
                 }
             }
@@ -159,21 +170,24 @@ class MainActivity : ComponentActivity() {
         notificationManager.notify(notificationId, builder.build())
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
+    @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
     @Composable
-    private fun WebSocketContent(navController: NavController) {
-        var messageToSend by remember { mutableStateOf("") }
+    fun WebSocketContent(navController: NavController) {
+        var isSendButtonEnabled by remember { mutableStateOf(false) }
+        var text by remember { mutableStateOf(TextFieldValue()) }
         val context = LocalContext.current
+
+        val keyboardController = LocalSoftwareKeyboardController.current
 
         // WebSocket content
         Column(
-            verticalArrangement = Arrangement.Center, // Align content in the center vertically
-            horizontalAlignment = Alignment.CenterHorizontally // Align content in the center horizontally
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Input text field
-            var isSendButtonEnabled by remember { mutableStateOf(false) }
-            var text by remember { mutableStateOf(TextFieldValue()) }
-
             TextField(
                 value = text,
                 onValueChange = {
@@ -186,56 +200,131 @@ class MainActivity : ComponentActivity() {
                 ),
                 keyboardActions = KeyboardActions(
                     onDone = {
+                        keyboardController?.hide() // Hide the keyboard when "Done" is pressed
                         if (isSendButtonEnabled) {
-                            // Send the message when "Done" is pressed
+                            // Send the Atmotube ID to Firebase
+                            sendAtmotubeIdToFirebase(text.text)
                             text = TextFieldValue()
                             isSendButtonEnabled = false
                         }
                     }
                 ),
                 modifier = Modifier
-                    .padding(16.dp)
-                    .width(200.dp) // Adjust the width as needed
+                    .widthIn(max = 200.dp)
             )
+
+            // Add spacing
+            Spacer(modifier = Modifier.height(16.dp))
 
             // Send button
             Button(
                 onClick = {
-                    // Handle the button click action here
-                    text = TextFieldValue()
-                    isSendButtonEnabled = false
-                    navController.navigate("second_screen")
+                    if (isSendButtonEnabled) {
+                        // Send the Atmotube ID to Firebase
+                        sendAtmotubeIdToFirebase(text.text)
+                        text = TextFieldValue()
+                        isSendButtonEnabled = false
+                        navController.navigate("second_screen")
+                    }
                 },
                 enabled = isSendButtonEnabled,
                 modifier = Modifier
-                    .padding(10.dp)
-                    .size(50.dp) // Adjust the size as needed
+                    .size(50.dp)
             ) {
                 Icon(imageVector = Icons.Default.Send, contentDescription = null)
             }
         }
     }
 
+
     @Composable
-    fun SecondScreen(message: String) {
-        Column(
+    fun SecondScreen(navController: NavController, message: String) {
+        val selectedAnswer = remember { mutableStateOf<String?>(null) }
+
+        Box(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            contentAlignment = Alignment.Center
         ) {
-            // Display the received message
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Display the received message
+                // (Add your logic to display the received message if needed)
 
-            // Display the question
-            Spacer(modifier = Modifier.height(16.dp)) // Add some spacing
-            Text(text = "Who won the World Cup?")
+                // Display the question
+                Spacer(modifier = Modifier.height(5.dp)) // Reduce the spacing
+                Text(text = "Are you allergic to pollen?")
 
-            // Display answer options with checkboxes
-            AnswerOption("Brazil")
-            AnswerOption("Germany")
-            AnswerOption("Italy")
-            AnswerOption("Argentina")
+                // Display answer options with checkboxes
+                AnswerOption("yes") {
+                    selectedAnswer.value = "yes"
+                }
+                AnswerOption("no") {
+                    selectedAnswer.value = "no"
+                }
+
+                // Add spacing
+                Spacer(modifier = Modifier.height(5.dp))
+            }
+
+            // Next button
+            Button(
+                onClick = {
+                    // Store the selected answer in Firebase
+                    selectedAnswer.value?.let {
+                        sendAnswerToFirebase(it)
+                    }
+
+                    navController.navigate("third_screen")
+                },
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(5.dp)
+                    .size(40.dp) // Adjust the size as needed
+            ) {
+                Text("Next")
+            }
         }
     }
+
+    @Composable
+    fun AnswerOption(answer: String, onAnswerSelected: () -> Unit) {
+        var isChecked by remember { mutableStateOf(false) }
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(8.dp)
+        ) {
+            Checkbox(
+                checked = isChecked,
+                onCheckedChange = {
+                    isChecked = it
+                    if (it) {
+                        onAnswerSelected()
+                    }
+                }
+            )
+            Spacer(modifier = Modifier.width(8.dp)) // Add spacing between checkbox and text
+            Text(text = answer)
+        }
+    }
+
+    private fun sendAnswerToFirebase(answer: String) {
+        val database =
+            FirebaseDatabase.getInstance("https://airguard-31380-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("user_answers")
+
+        // Store the answer in Firebase
+        database.push().setValue(answer)
+    }
+
+
+
+
 
     @Composable
     fun AnswerOption(answer: String) {
@@ -252,6 +341,34 @@ class MainActivity : ComponentActivity() {
             Spacer(modifier = Modifier.width(8.dp)) // Add spacing between checkbox and text
             Text(text = answer)
         }
+    }
+
+    @Composable
+    fun ThirdScreen(navController: NavController) {
+        // Create the content for the third screen
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Display the question
+            Spacer(modifier = Modifier.height(16.dp)) // Add some spacing
+            Text(text = "What's your favorite color?")
+
+            // Display answer options with checkboxes
+            AnswerOption("Red")
+            AnswerOption("Blue")
+            AnswerOption("Green")
+        }
+    }
+
+    private fun sendAtmotubeIdToFirebase(atmotubeId: String) {
+        val database =
+            FirebaseDatabase.getInstance("https://airguard-31380-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("atmotube_id")
+
+        // Store the Atmotube ID in Firebase
+        database.setValue(atmotubeId)
     }
 
 }
