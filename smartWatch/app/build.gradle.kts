@@ -1,6 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
+
+    // Add the Google services Gradle plugin
 }
 
 android {
@@ -64,10 +67,43 @@ dependencies {
     implementation("androidx.wear.compose:compose-material:1.0.0")
     implementation("androidx.wear.compose:compose-foundation:1.0.0")
     implementation("androidx.activity:activity-compose:1.5.1")
+    implementation("com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.10.0")
+    implementation("com.google.firebase:firebase-messaging-ktx:23.4.0")
+    implementation("com.google.firebase:firebase-database-ktx:20.3.0")
+    implementation("com.google.firebase:firebase-database:20.3.0")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:x.x.x")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:x.x.x")
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+
+
+    // TODO: Add the dependencies for Firebase products you want to use
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("androidx.activity:activity-compose:1.3.1")
+    implementation("androidx.compose.material3:material3:1.0.0-alpha09")
+    implementation("androidx.compose.foundation:foundation:1.0.0-alpha09")
+    implementation("androidx.compose.ui:ui:1.0.0-alpha09")
+    implementation("androidx.compose.ui:ui-tooling:1.0.0-alpha09")
+    implementation("androidx.compose.runtime:runtime-livedata:1.0.0-alpha09")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
+    implementation("androidx.navigation:navigation-compose:2.4.0-alpha05")
+
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+
+    // Add the dependency for the Firebase SDK for Google Analytics
+
+
+
+
+    // Add the dependencies for any other desired Firebase products
+    // https://firebase.google.com/docs/android/setup#available-libraries
 
 
 

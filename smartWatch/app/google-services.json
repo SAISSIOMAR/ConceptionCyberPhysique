@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "824040804302",
+    "project_id": "airguard-31380",
+    "storage_bucket": "airguard-31380.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824040804302:android:4768a3b8d9f887c988a59f",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0sMDFBsd27dMhuZEIb6UA4rsXn_6SoME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824040804302:android:aaac5a0d30fea19788a59f",
+        "android_client_info": {
+          "package_name": "com.example.myapplication.presentation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0sMDFBsd27dMhuZEIb6UA4rsXn_6SoME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
