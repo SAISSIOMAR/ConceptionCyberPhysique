@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Air Quality Management Form</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: #f7f7f7;
+        margin: 0;
+        padding: 20px;
+    }
+    .container {
+        background: #fff;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+    h2, h3 {
+        color: #333;
+    }
+    label, button, .tooltip {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+   input {
+        display: block;
+        width: 95%;
+        margin-bottom: 10px;
+    }
+    input[type=text], button {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    button {
+        background-color: #5CDB95;
+        color: white;
+        cursor: pointer;
+        border: none;
+    }
+    button:hover {
+        background-color: #379683;
+    }
+    .tooltip {
+        position: relative;
+        cursor: help;
+    }
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 200px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -100px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
+    .add-button {
+        margin-bottom: 20px;
+        width: 25%;
+        margin: auto;
+    }
+
+    .submit {
+         background-color: #379683;
+         color: white;
+         cursor: pointer;
+         border: none;
+         width: 26%;
+         padding: 10px;
+         margin: auto;
+         border-radius: 4px;
+         margin-top: 10%;
+    } 
+    @media (max-width: 768px) {
+        .container {
+            width: auto;
+            padding: 10px;
+        }
+        .tooltip .tooltiptext {
+            width: auto;
+            left: 5%;
+            margin-left: 0;
+            text-align: left;
+        }
+        .input[type=text] {
+            padding: 3px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Home Air Quality Management Form</h2>
+
+    <form id="airQualityForm">
+        <div class="section">
+            <h3>Personal Information</h3>
+            <label for="atmotubeId">Atmotube ID:</label>
+            <input type="text" id="atmotubeId" name="atmotubeId">
+            <label for="atmotubeApiKey">Atmotube API Key:</label>
+            <input type="text" id="atmotubeApiKey" name="atmotubeApiKey">
+            <label>Allergies:</label>
+            <div class="tooltip">PM1
+                <input type="checkbox" id="allergyPM1" name="allergyPM1">
+                <span class="tooltiptext">PM1 particles are tiny particles smaller than 1 micron, which can penetrate deep into the lungs.</span>
+            </div>
+            <div class="tooltip">PM2.5
+                <input type="checkbox" id="allergyPM25" name="allergyPM25">
+                <span class="tooltiptext">PM2.5 particles are particles smaller than 2.5 microns, known for causing respiratory problems.</span>
+            </div>
+            <div class="tooltip">PM10
+                <input type="checkbox" id="allergyPM10" name="allergyPM10">
+                <span class="tooltiptext">PM10 particles are inhalable particles smaller than 10 microns, including dust and pollen.</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Home Configuration</h3>
+            <div id="doorTags">
+                <label>Door Tags:</label>
+                <input type="text" name="doorTag1">
+                <!-- Placeholder for additional door tags -->
+            </div>
+            <button type="button" class="add-button" onclick="addDoorTag()">Add More Door Tags</button>
+
+            <div id="windowTags">
+                <label>Window Tags:</label>
+                <input type="text" name="windowTag1">
+                <!-- Placeholder for additional window tags -->
+            </div>
+            <button type="button" class="add-button" onclick="addWindowTag()">Add More Window Tags</button>
+        </div>
+
+        <button type="button" class="submit" > Save </button>
+    </form>
+</div>
+
+<script>
+    function addDoorTag() {
+        var container = document.getElementById("doorTags");
+        var input = document.createElement("input");
+        input.type = "text";
+        input.name = "doorTag";
+        container.appendChild(input);
+    }
+
+    function addWindowTag() {
+        var container = document.getElementById("windowTags");
+        var input = document.createElement("input");    
+        input.type = "text";
+        input.name = "windowTag";
+        container.appendChild(input);
+    }
+</script>
+
+</body>
+</html>
+
