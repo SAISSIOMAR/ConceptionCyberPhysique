@@ -1,0 +1,109 @@
+/* home.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+header {
+    background-color: #004f6e;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em; /* Adjusted for mobile */
+}
+
+header p {
+    margin: 10px 0 0;
+    font-size: 1em; /* Adjusted for mobile */
+}
+
+main {
+    padding: 10px; /* Adjusted padding for mobile */
+}
+
+.dashboard {
+    background-color: #333;
+    color: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Added space between sections */
+}
+
+.air-quality-gauge {
+    /* Placeholder for gauge styles */
+}
+
+.air-quality-score {
+    text-align: center;
+    padding-bottom: 10px; /* Added padding for visual separation */
+}
+
+#score {
+    font-size: 3em;
+    display: block; /* Makes score on its own line */
+}
+
+.label {
+    display: block;
+    margin-top: 5px; /* Reduced margin for mobile */
+}
+
+.updated-time {
+    font-size: 0.8em;
+}
+
+.pollutants {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Creates a two-column grid layout */
+    gap: 10px; /* Adds space between grid items */
+    margin-top: 10px;
+}
+
+.pollutant {
+    text-align: center; /* Centers the text within each grid item */
+}
+
+.pollutant span {
+    display: block; /* Each span on its own line */
+}
+
+footer {
+    background-color: #333;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.8em;
+}
+
+.air-quality-gauge {
+    width: 200px;
+    height: 150px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* Responsive design for smaller devices */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5em; /* Further reduction for smaller screens */
+    }
+
+    header p {
+        font-size: 0.9em; /* Further reduction for smaller screens */
+    }
+
+    .dashboard {
+        padding: 15px; /* Reduced padding for smaller screens */
+    }
+}
