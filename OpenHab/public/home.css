@@ -8,6 +8,18 @@ html, body {
 
 main {
     flex: 1;
+    display: grid;
+}
+
+.button-profile {
+    height: 50px;
+    width: 50px;
+}
+
+.profile {
+    display: flex;
+    align-items: baseline;
+    justify-content: end;
 }
 
 header {
@@ -38,6 +50,8 @@ main {
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px; /* Added space between sections */
+    height: fit-content;
+
 }
 
 .air-quality-gauge {
