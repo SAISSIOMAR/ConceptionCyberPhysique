@@ -63,10 +63,11 @@ import okio.ByteString
 
 
 class MainActivity : ComponentActivity() {
-    private lateinit var webSocket: WebSocket
     private var receivedMessage by mutableStateOf("")
     private val channelId = "WebSocketChannel"
     private val notificationId = 1
+    private var webSocket: WebSocket? = null // Make webSocket nullable
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,8 +100,10 @@ class MainActivity : ComponentActivity() {
 
 
     private fun initializeWebSocket() {
+        webSocket?.close(1000, "App closed") // Use appropriate close code and reason
+
         val client = OkHttpClient()
-        val request = Request.Builder().url("ws://192.168.194.24:1880/ws/watch/").build()
+        val request = Request.Builder().url("ws://10.212.160.192:1880/ws/watch/").build()
         val listener = object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 MainScope().launch {
@@ -138,6 +141,11 @@ class MainActivity : ComponentActivity() {
 
         webSocket = client.newWebSocket(request, listener)
         client.dispatcher.executorService.shutdown()
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        // Close the WebSocket connection when the activity is destroyed
+        webSocket?.close(1000, "App destroyed") // Use appropriate close code and reason
     }
 
     private fun showNotification(title: String, content: String) {

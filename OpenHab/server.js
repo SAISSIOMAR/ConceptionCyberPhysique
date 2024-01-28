@@ -1,6 +1,9 @@
 const express = require('express');
 const axios = require('axios');
 
+const path = require('path');
+
+
 const app = express();
 const port = 3000;
 
@@ -18,6 +21,12 @@ app.get('/data', async (req, res) => {
         res.status(500).send('Error fetching data from OpenHAB');
     }
 });
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/sign.html'));
+});
+
 
 app.get('/statusd4', async (req, res) => {
     try {
