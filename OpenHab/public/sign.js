@@ -30,6 +30,37 @@ $(document).ready(function() {
             success: function(response) {
                 console.log('Account created:', response);
                 alert(response.message);
+
+                // Handle success (e.g., showing a success message)
+            },
+            error: function(error) {
+                console.log('Error:', error);
+                alert(error.message);
+                // Handle error
+            }
+        });
+    });
+
+    $('#loginForm').on('submit', function(e) {
+        e.preventDefault();
+
+        // Gather data from the form
+        var userData = {
+            username: $('#loginForm input[name="username"]').val(),
+            password: $('#loginForm input[name="password"]').val()
+        };
+        console.log(userData);
+
+        // Send data to Node-RED
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:1880/sign-in',
+            data: JSON.stringify(userData),
+            contentType: 'application/json',
+            success: function(response) {
+                console.log('sign in succesfully', response);
+                alert(response.message);
+                
                 // Handle success (e.g., showing a success message)
             },
             error: function(error) {
