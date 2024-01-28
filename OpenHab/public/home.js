@@ -46,3 +46,7 @@ setInterval(updateAirQualityData, 2000);
 // Initial update on page load
 google.charts.load('current', {'packages':['gauge']});
 google.charts.setOnLoadCallback(updateAirQualityData);
+
+function redirectToProfile(){
+    window.location.href = "/profile";
+}

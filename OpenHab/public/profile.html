@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Home Air Quality Management Form</title>
 <style>
     body {
@@ -147,7 +148,7 @@
             <button type="button" class="add-button" onclick="addWindowTag()">Add More Window Tags</button>
         </div>
 
-        <button type="button" class="submit" > Save </button>
+        <input type="submit" value="Submit">
     </form>
 </div>
 
@@ -167,6 +168,52 @@
         input.name = "windowTag";
         container.appendChild(input);
     }
+    document.getElementById('airQualityForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submit action
+
+        // Get all form elements
+        const form = event.target;
+        const formData = new FormData(form);
+        const data = {};
+
+        // Convert FormData into a regular object
+        for (const [key, value] of formData.entries()) {
+            if (data.hasOwnProperty(key)) {
+                // If property already exists, it means we have multiple values (for doors/windows)
+                if (!Array.isArray(data[key])) {
+                    // If it's not already an array, convert it into an array
+                    data[key] = [data[key]];
+                }
+                data[key].push(value);
+            } else {
+                // If property doesn't exist, simply add it to the object
+                data[key] = value;
+            }
+        }
+
+        // Add allergies to the data object
+        data['allergies'] = {
+            'PM1': form['allergyPM1'].checked,
+            'PM2.5': form['allergyPM25'].checked,
+            'PM10': form['allergyPM10'].checked
+        };
+        console.log(data);
+
+        // Perform the POST request
+        fetch('http://localhost:1880/config', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(response => response.json())
+          .then(data => {
+              console.log('Success:', data);
+          })
+          .catch((error) => {
+              console.error('Error:', error);
+          });
+    });
 </script>
 
 </body>
