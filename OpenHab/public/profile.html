@@ -105,6 +105,30 @@
             padding: 3px;
         }
     }
+    .tag-section .tag-pair {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.input-group {
+    flex-basis: 48%; /* Adjust the width as necessary */
+}
+
+.input-group label {
+    display: block;
+}
+
+/* You may need to adjust the media query for smaller screens if necessary */
+@media (max-width: 768px) {
+    .tag-section .tag-pair {
+        flex-direction: column;
+    }
+
+    .input-group {
+        flex-basis: auto;
+    }
+}
 </style>
 </head>
 <body>
@@ -138,16 +162,32 @@
 
         <div class="section">
             <h3>Home Configuration</h3>
-            <div id="doorTags">
-                <label>Door Tags:</label>
-                <input type="text" name="doorTag1">
+            <div class="tag-section" id="doorTags">
+                <div class="tag-pair">
+                    <div class="input-group">
+                        <label>Door Tag:</label>
+                        <input type="text" name="doorTag[]">
+                    </div>
+                    <div class="input-group">
+                        <label>What you want to call it:</label>
+                        <input type="text" name="doorTagName[]" placeholder="Ex: kitchen door, Bedroom door...">
+                    </div>
+                </div>
                 <!-- Placeholder for additional door tags -->
             </div>
             <button type="button" class="add-button" onclick="addDoorTag()">Add Door Tags</button>
-
-            <div id="windowTags">
-                <label>Window Tags:</label>
-                <input type="text" name="windowTag1">
+        
+            <div class="tag-section" id="windowTags">
+                <div class="tag-pair">
+                    <div class="input-group">
+                        <label>Window Tag:</label>
+                        <input type="text" name="windowTag[]">
+                    </div>
+                    <div class="input-group">
+                        <label>What you want to call it:</label>
+                        <input type="text" name="windowTagName[]" placeholder="Ex: kitchen window, Bedroom window...">
+                    </div>
+                </div>
                 <!-- Placeholder for additional window tags -->
             </div>
             <button type="button" class="add-button" onclick="addWindowTag()">Add Window Tags</button>
@@ -164,69 +204,137 @@
 if (username !== null && username !== undefined) {
   document.getElementById("username").placeholder = username;
 }
-    function addDoorTag() {
-        var container = document.getElementById("doorTags");
-        var input = document.createElement("input");
-        input.type = "text";
-        input.name = "doorTag";
-        container.appendChild(input);
+function addDoorTag() {
+    var container = document.getElementById("doorTags");
+    var tagPair = document.createElement("div");
+    tagPair.classList.add("tag-pair");
+
+    var tagInputGroup = document.createElement("div");
+    tagInputGroup.classList.add("input-group");
+    var tagLabel = document.createElement("label");
+    tagLabel.textContent = "Door Tags:";
+    var tagInput = document.createElement("input");
+    tagInput.type = "text";
+    tagInput.name = "doorTag[]";
+    tagInputGroup.appendChild(tagLabel);
+    tagInputGroup.appendChild(tagInput);
+
+    var nameInputGroup = document.createElement("div");
+    nameInputGroup.classList.add("input-group");
+    var nameLabel = document.createElement("label");
+    nameLabel.textContent = "What you want to call it:";
+    var nameInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.name = "doorTagName[]";
+    nameInput.placeholder = "Ex: kitchen door, Bedroom door...";
+    nameInputGroup.appendChild(nameLabel);
+    nameInputGroup.appendChild(nameInput);
+
+    tagPair.appendChild(tagInputGroup);
+    tagPair.appendChild(nameInputGroup);
+
+    container.appendChild(tagPair);
+}
+
+function addWindowTag() {
+    var container = document.getElementById("windowTags");
+    var tagPair = document.createElement("div");
+    tagPair.classList.add("tag-pair");
+
+    var tagInputGroup = document.createElement("div");
+    tagInputGroup.classList.add("input-group");
+    var tagLabel = document.createElement("label");
+    tagLabel.textContent = "Window Tags:";
+    var tagInput = document.createElement("input");
+    tagInput.type = "text";
+    tagInput.name = "windowTag[]";
+    tagInputGroup.appendChild(tagLabel);
+    tagInputGroup.appendChild(tagInput);
+
+    var nameInputGroup = document.createElement("div");
+    nameInputGroup.classList.add("input-group");
+    var nameLabel = document.createElement("label");
+    nameLabel.textContent = "What you want to call it:";
+    var nameInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.name = "windowTagName[]";
+    nameInput.placeholder = "Ex: kitchen window, Bedroom window...";
+    nameInputGroup.appendChild(nameLabel);
+    nameInputGroup.appendChild(nameInput);
+
+    tagPair.appendChild(tagInputGroup);
+    tagPair.appendChild(nameInputGroup);
+
+    container.appendChild(tagPair);
+}
+
+
+document.getElementById('airQualityForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submit action
+
+    // Get all form elements
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = {};
+
+    // Initialize arrays for door and window tags
+    data.doorTagsData = [];
+    data.windowTagsData = [];
+
+    // Retrieve and structure door tags
+    const doorTags = form.querySelectorAll('[name="doorTag[]"]');
+    const doorTagNames = form.querySelectorAll('[name="doorTagName[]"]');
+    for (let i = 0; i < doorTags.length; i++) {
+        data.doorTagsData.push({
+            tag: doorTags[i].value,
+            name: doorTagNames[i].value
+        });
     }
 
-    function addWindowTag() {
-        var container = document.getElementById("windowTags");
-        var input = document.createElement("input");    
-        input.type = "text";
-        input.name = "windowTag";
-        container.appendChild(input);
+    // Retrieve and structure window tags
+    const windowTags = form.querySelectorAll('[name="windowTag[]"]');
+    const windowTagNames = form.querySelectorAll('[name="windowTagName[]"]');
+    for (let i = 0; i < windowTags.length; i++) {
+        data.windowTagsData.push({
+            tag: windowTags[i].value,
+            name: windowTagNames[i].value
+        });
     }
-    document.getElementById('airQualityForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submit action
 
-        // Get all form elements
-        const form = event.target;
-        const formData = new FormData(form);
-        const data = {};
-
-        // Convert FormData into a regular object
-        for (const [key, value] of formData.entries()) {
-            if (data.hasOwnProperty(key)) {
-                // If property already exists, it means we have multiple values (for doors/windows)
-                if (!Array.isArray(data[key])) {
-                    // If it's not already an array, convert it into an array
-                    data[key] = [data[key]];
-                }
-                data[key].push(value);
-            } else {
-                // If property doesn't exist, simply add it to the object
-                data[key] = value;
-            }
+    // Append other form data
+    for (const [key, value] of formData.entries()) {
+        if (!key.startsWith('doorTag') && !key.startsWith('doorTagName') && !key.startsWith('windowTag') && !key.startsWith('windowTagName')) {
+            // Handle other form fields
+            data[key] = value === 'on' ? true : value; // Convert 'on' from checkboxes to true
         }
-        var username = localStorage.getItem("username");
+    }
+
+    // Add username from localStorage if it exists
+    var username = localStorage.getItem("username");
+    if (username) {
         data['username'] = username;
+    }
 
-        // Add allergies to the data object
-        // data['allergies'] = {
-        //     'PM1': form['allergyPM1'].checked,
-        //     'PM2.5': form['allergyPM25'].checked,
-        //     'PM10': form['allergyPM10'].checked
-        // };
-        console.log(data);
+    // Log the structured data to be sent
+    console.log(data);
 
-        // Perform the POST request
-        fetch('http://localhost:1880/config', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(response => response.json())
-          .then(data => {
-              console.log('Success:', data);
-          })
-          .catch((error) => {
-              console.error('Error:', error);
-          });
-    });
+    // Perform the POST request
+    fetch('http://localhost:1880/config', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(response => response.json())
+      .then(data => {
+          console.log('Success:', data);
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+      });
+});
+
+
 </script>
 
 </body>
