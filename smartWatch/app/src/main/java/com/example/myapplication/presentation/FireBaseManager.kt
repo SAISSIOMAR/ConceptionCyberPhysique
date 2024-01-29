@@ -11,6 +11,7 @@ class FirebaseManager {
     private val database = FirebaseDatabase.getInstance(DATABASE_URL).reference
 
     fun saveAllergyData(allergyData: AllergyData) {
+
         // Generate a unique key for each entry
         val key = database.child("allergyData").push().key
         key?.let {
