@@ -75,6 +75,9 @@
         width: 25%;
         margin: auto;
     }
+    .rdOnly{
+        background-color: #f7f7f7;
+    }
 
     .submit {
          background-color: #379683;
@@ -112,10 +115,12 @@
     <form id="airQualityForm">
         <div class="section">
             <h3>Personal Information</h3>
-            <label for="atmotubeId">Atmotube ID:</label>
-            <input type="text" id="atmotubeId" name="atmotubeId">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" readonly ="readonly" class ="rdOnly" >
             <label for="atmotubeApiKey">Atmotube API Key:</label>
-            <input type="text" id="atmotubeApiKey" name="atmotubeApiKey">
+            <input type="text" id="atmotubeApiKey" name="atmotubeApiKey" required>
+            <label for="openHabLink">Your OpenHab link:</label>
+            <input type="text" id="openHabLink" name="openHabLink" required>
             <label>Allergies:</label>
             <div class="tooltip">PM1
                 <input type="checkbox" id="allergyPM1" name="allergyPM1">
@@ -138,14 +143,14 @@
                 <input type="text" name="doorTag1">
                 <!-- Placeholder for additional door tags -->
             </div>
-            <button type="button" class="add-button" onclick="addDoorTag()">Add More Door Tags</button>
+            <button type="button" class="add-button" onclick="addDoorTag()">Add Door Tags</button>
 
             <div id="windowTags">
                 <label>Window Tags:</label>
                 <input type="text" name="windowTag1">
                 <!-- Placeholder for additional window tags -->
             </div>
-            <button type="button" class="add-button" onclick="addWindowTag()">Add More Window Tags</button>
+            <button type="button" class="add-button" onclick="addWindowTag()">Add Window Tags</button>
         </div>
 
         <input type="submit" value="Submit">
@@ -153,6 +158,12 @@
 </div>
 
 <script>
+      var username = localStorage.getItem("username");
+
+// Check if username is not null or undefined, then set it as the placeholder
+if (username !== null && username !== undefined) {
+  document.getElementById("username").placeholder = username;
+}
     function addDoorTag() {
         var container = document.getElementById("doorTags");
         var input = document.createElement("input");
@@ -190,13 +201,15 @@
                 data[key] = value;
             }
         }
+        var username = localStorage.getItem("username");
+        data['username'] = username;
 
         // Add allergies to the data object
-        data['allergies'] = {
-            'PM1': form['allergyPM1'].checked,
-            'PM2.5': form['allergyPM25'].checked,
-            'PM10': form['allergyPM10'].checked
-        };
+        // data['allergies'] = {
+        //     'PM1': form['allergyPM1'].checked,
+        //     'PM2.5': form['allergyPM25'].checked,
+        //     'PM10': form['allergyPM10'].checked
+        // };
         console.log(data);
 
         // Perform the POST request

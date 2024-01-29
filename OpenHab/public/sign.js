@@ -29,7 +29,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             success: function(response) {
                 console.log('Account created:', response);
-                alert(response.message);
+                //redirect to login page
 
                 // Handle success (e.g., showing a success message)
             },
@@ -59,7 +59,9 @@ $(document).ready(function() {
             contentType: 'application/json',
             success: function(response) {
                 console.log('sign in succesfully', response);
-                alert(response.message);
+                window.location.href = 'http://localhost:3000/home';
+                localStorage.setItem('username', userData.username);
+
                 
                 // Handle success (e.g., showing a success message)
             },
