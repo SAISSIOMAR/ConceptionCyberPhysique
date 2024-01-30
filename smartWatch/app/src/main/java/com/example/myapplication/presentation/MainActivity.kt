@@ -69,6 +69,7 @@ import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString
 import okio.IOException
+import org.json.JSONException
 import org.json.JSONObject
 import java.util.concurrent.Executors
 
@@ -80,6 +81,10 @@ class MainActivity : ComponentActivity() {
     private var webSocket: WebSocket? = null // Make webSocket nullable
     private var ipSegment by mutableStateOf("") // Add this line
     private var currentUsername: String? = null
+    private var currentAirQualityLabel by mutableStateOf<String?>(null)
+
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,11 +108,8 @@ class MainActivity : ComponentActivity() {
                     composable("websocket_content") {
                         WebSocketContent(navController)
                     }
-                    composable("air_quality/{quality}") { backStackEntry ->
-                        AirQualityScreen(
-                            quality = backStackEntry.arguments?.getString("quality") ?: "0",
-                            navController = navController
-                        )
+                    composable("air_quality") {
+                        AirQualityScreen(navController)
                     }
                 }
             }
@@ -144,12 +146,26 @@ class MainActivity : ComponentActivity() {
 
             override fun onMessage(webSocket: WebSocket, text: String) {
                 MainScope().launch {
-                    receivedMessage = text
-                    showNotification("New Message", text)
-                    System.out.println("text  : "+text)
-                }
+                    try {
+                        System.out.println("heeeeeeeere" + text)
+                        val jsonObject = JSONObject(text)
+                        if (jsonObject.has("label")) {
+                            val label = jsonObject.getString("label")
+                            // Use a state variable for currentAirQualityLabel here
+                            currentAirQualityLabel = label
 
+                        } else {
+                            // Handle other types of messages
+                            receivedMessage = text
+                            showNotification("New Message", text)
+                        }
+                    } catch (e: JSONException) {
+                        receivedMessage = text
+                        showNotification("New Message", text)
+                    }
+                }
             }
+
 
             override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
                 MainScope().launch {
@@ -416,7 +432,8 @@ class MainActivity : ComponentActivity() {
                         System.out.println("ip   "+ipSegment)
                         System.out.println("username   "+json.getString("username"))
                         showPopUp("login successful", context)
-                        navController.navigate("air_quality/20")
+                        navController.navigate("air_quality")
+
                     } else {
                         // Status code 400, request failed
                         showPopUp("login failed", context)
@@ -441,27 +458,22 @@ class MainActivity : ComponentActivity() {
 
 
     @Composable
-    fun AirQualityScreen(quality: String, navController: NavController) {
-        val airQuality = quality.toIntOrNull() ?: 0
-        val color = when {
-            airQuality < 50 -> Color.Green
-            airQuality < 100 -> Color.Yellow
-            airQuality < 150 -> Color.Cyan
-            else -> Color.Red
-        }
+    fun AirQualityScreen(navController: NavController) {
+        val airQualityLabel = currentAirQualityLabel ?: "Unknown"
+        System.out.println("heeeeeeeere222" + airQualityLabel)
+        val color = getAirQualityColor(airQualityLabel)
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp), // Padding applied here to avoid the button being cut off on smaller screens
+                .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
-            // Existing components for displaying air quality
             Canvas(modifier = Modifier.size(200.dp)) {
                 drawCircle(color = color)
             }
             Text(
-                text = "Air Quality: $quality",
+                text = "QA: $airQualityLabel",
                 color = Color.White,
                 modifier = Modifier.align(Alignment.Center)
             )
@@ -495,6 +507,18 @@ class MainActivity : ComponentActivity() {
         }
 
 
+    }
+
+    private fun getAirQualityColor(label: String): Color {
+        return when (label) {
+            "Bonne" -> Color.Green
+            "Modérée" -> Color.Yellow
+            "Mauvaise pour les groupes sensibles" -> Color.Magenta
+            "Mauvaise" -> Color.Red
+            "Très mauvaise" -> Color.DarkGray
+            "Dangereuse" -> Color.Black
+            else -> Color.Gray // Default color for unknown labels
+        }
     }
     private fun cleanupAndLogout(navController: NavController) {
         val jsonObject = JSONObject().apply {
