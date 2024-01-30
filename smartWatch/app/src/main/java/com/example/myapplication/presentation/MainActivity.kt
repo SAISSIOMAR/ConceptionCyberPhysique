@@ -6,6 +6,8 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -25,8 +27,10 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -50,6 +54,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Icon
 import androidx.wear.compose.material.Text
+import androidx.wear.remote.interactions.RemoteActivityHelper
 import com.example.myapplication.presentation.theme.MyApplicationTheme
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -65,6 +70,7 @@ import okhttp3.WebSocketListener
 import okio.ByteString
 import okio.IOException
 import org.json.JSONObject
+import java.util.concurrent.Executors
 
 
 class MainActivity : ComponentActivity() {
@@ -72,6 +78,8 @@ class MainActivity : ComponentActivity() {
     private val channelId = "WebSocketChannel"
     private val notificationId = 1
     private var webSocket: WebSocket? = null // Make webSocket nullable
+    private var ipSegment by mutableStateOf("") // Add this line
+    private var currentUsername: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -188,8 +196,8 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun LoginScreen(navController: NavController) {
         // State variables for username and password
-        var username by remember { mutableStateOf("") }
-        var password by remember { mutableStateOf("") }
+        var username by remember { mutableStateOf("aymane") }
+        var password by remember { mutableStateOf("12") }
         val context = LocalContext.current
 
         // Use a scrollable Column in case the content does not fit on the screen
@@ -223,43 +231,73 @@ class MainActivity : ComponentActivity() {
                 json.put("username", username)
                 json.put("password", password)
 
-                sendCreateAccountRequest(json, context)
-                navController.navigate("air_quality/20")
+                sendCreateAccountRequest(json, context,navController)
+
             }) {
                 Text("Confirm")
             }
             Spacer(modifier = Modifier.height(16.dp))
-            // Navigate to WebSocket Screen Button
-            Button(onClick = {
-                navController.navigate("websocket_content")
-            }) {
-                Text("debug")
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.BottomEnd
+            ) {
+                Button(
+                    onClick = { navController.popBackStack() },
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text("Back")
+                }
             }
+            // Navigate to WebSocket Screen Button
+
         }
     }
 
     @Composable
     fun MainScreen(navController: NavController) {
+        val context = LocalContext.current
+        val base = "http://10.212.160."
+        val port = ":3000/"
+
+
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()) // Add scrolling capability
+                .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(
                 onClick = {
-                    // Navigate to Login Screen
+                    // Navigate to the login screen
                     navController.navigate("login")
                 }
             ) {
                 Text("Login")
             }
             Spacer(modifier = Modifier.height(16.dp))
+
+            // ClickableText with annotated string
             Button(
                 onClick = {
-                    // Currently does nothing for SignUp
-                }
+                    // Use RemoteActivityHelper to start the activity on the paired device
+                    val remoteActivityHelper = RemoteActivityHelper(context, Executors.newSingleThreadExecutor())
+                    remoteActivityHelper.startRemoteActivity(
+                        Intent(Intent.ACTION_VIEW)
+                            .addCategory(Intent.CATEGORY_BROWSABLE)
+                            .setData(Uri.parse(base+ipSegment+port)),
+                        null
+                    )
+                },
+                modifier = Modifier.size(width = 50.dp, height = 50.dp) // Specify the size of the button
             ) {
-                Text("SignUp")
+                Text("Sign Up")
+            }
+            Button(onClick = {
+                navController.navigate("websocket_content")
+            }) {
+                Text("debug")
             }
         }
     }
@@ -297,7 +335,7 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
     @Composable
     fun WebSocketContent(navController: NavController) {
-        var text by remember { mutableStateOf(TextFieldValue()) }
+        var text by remember { mutableStateOf(TextFieldValue("184")) }
         val keyboardController = LocalSoftwareKeyboardController.current
 
         Box(modifier = Modifier.fillMaxSize()) {
@@ -321,8 +359,8 @@ class MainActivity : ComponentActivity() {
                 // Send Button
                 Button(
                     onClick = {
-                        val replacementDigits = text.text
-                        initializeWebSocket(replacementDigits, "omar")
+                        ipSegment = text.text
+                        navController.popBackStack()
                         // text = TextFieldValue() // Comment out or remove this line to keep the text in the input field
                     },
                     enabled = text.text.isNotBlank(),
@@ -347,12 +385,15 @@ class MainActivity : ComponentActivity() {
 
 
 
-    private fun sendCreateAccountRequest(json: JSONObject, context: Context) {
+    private fun sendCreateAccountRequest(json: JSONObject, context: Context,navController: NavController) {
         val client = OkHttpClient()
         val requestBody = json.toString().toRequestBody("application/json; charset=utf-8".toMediaType())
 
+        val base = "http://10.212.160."
+        val port = ":1880/sign-in"
+
         val request = Request.Builder()
-            .url("http://10.0.2.2:1880/sign-in") // Use the correct IP for local testing
+            .url(base+ipSegment+port) // Use the correct IP for local testing
             .post(requestBody)
             .build()
 
@@ -370,7 +411,12 @@ class MainActivity : ComponentActivity() {
                 MainScope().launch {
                     if (response.isSuccessful) {
                         // If needed, update UI based on response. Must be done on the main thread.
+                        currentUsername = json.getString("username")
+                        initializeWebSocket(ipSegment, currentUsername ?: "")
+                        System.out.println("ip   "+ipSegment)
+                        System.out.println("username   "+json.getString("username"))
                         showPopUp("login successful", context)
+                        navController.navigate("air_quality/20")
                     } else {
                         // Status code 400, request failed
                         showPopUp("login failed", context)
@@ -405,7 +451,9 @@ class MainActivity : ComponentActivity() {
         }
 
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp), // Padding applied here to avoid the button being cut off on smaller screens
             contentAlignment = Alignment.Center
         ) {
             // Existing components for displaying air quality
@@ -418,28 +466,48 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier.align(Alignment.Center)
             )
 
-            // Logout Button
-            Button(
+            // Logout Button with an Icon
+            FloatingActionButton(
                 onClick = {
                     navController.navigate("main")
                 },
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(16.dp)
+                    .size(25.dp)
+                    .align(Alignment.BottomCenter),
+                // Instead of backgroundColor, use 'background' parameter
+                // or just remove it to use the default color provided by the theme
             ) {
-                Text("Logout")
+                FloatingActionButton(
+                    onClick = {
+                        cleanupAndLogout(navController)
+                    },
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(16.dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ExitToApp,
+                        contentDescription = "Logout",
+                        tint = Color.White
+                    )
+                }
             }
         }
+
+
     }
+    private fun cleanupAndLogout(navController: NavController) {
+        val jsonObject = JSONObject().apply {
+            put("username", currentUsername ?: "unknown")
+            put("type", "logout")
+        }
+        val jsonMessage = jsonObject.toString()
+        webSocket?.send(jsonMessage)
+        webSocket?.close(1000, "User logged out")
 
-
-
-
-
-
-
-
-
-
-
+        // Navigate back to the main screen
+        navController.navigate("main") {
+            popUpTo("main") { inclusive = true }
+        }
+    }
 }

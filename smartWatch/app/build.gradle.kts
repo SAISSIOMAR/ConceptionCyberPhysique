@@ -72,6 +72,7 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx:23.4.0")
     implementation("com.google.firebase:firebase-database-ktx:20.3.0")
     implementation("com.google.firebase:firebase-database:20.3.0")
+    implementation("androidx.wear:wear-remote-interactions:1.0.0")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
@@ -94,6 +95,7 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.0.0-alpha09")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
     implementation("androidx.navigation:navigation-compose:2.4.0-alpha05")
+
 
     // When using the BoM, you don't specify versions in Firebase library dependencies
 
