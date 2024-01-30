@@ -30,6 +30,7 @@ $(document).ready(function() {
             success: function(response) {
                 console.log('Account created:', response);
                 //redirect to login page
+                    window.location.href = 'http://localhost:3000/';
 
                 // Handle success (e.g., showing a success message)
             },

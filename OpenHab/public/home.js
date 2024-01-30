@@ -20,7 +20,7 @@ function drawGauge(score) {
 function updateAirQualityData() {
     // Fetch data from an API or sensor here
     const airQualityData = {
-        score: Math.floor(Math.random() * 101), // Simulated new score
+        score: 82, // Simulated new score
         updatedTime: new Date().toLocaleTimeString(),
         pm1: '0.10',
         pm25: '0.13',
@@ -41,7 +41,7 @@ function updateAirQualityData() {
 }
 
 // Simulate data update every 10 seconds
-setInterval(updateAirQualityData, 2000);
+setInterval(updateAirQualityData, 10000000);
 
 // Initial update on page load
 google.charts.load('current', {'packages':['gauge']});
