@@ -59,6 +59,10 @@ $(document).ready(function() {
             contentType: 'application/json',
             success: function(response) {
                 console.log('sign in succesfully', response);
+                //store the response payload in the local storage
+                localStorage.setItem('userData', JSON.stringify(response));
+                console.log('token', localStorage.getItem('token'));
+                
                 window.location.href = 'http://localhost:3000/home';
                 localStorage.setItem('username', userData.username);
 

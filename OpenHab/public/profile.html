@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,6 +13,22 @@
         background: #f7f7f7;
         margin: 0;
         padding: 20px;
+    }
+    .fa-solid {
+        margin-left: 50%;
+        cursor: pointer;
+        color: #379683;
+        border-radius: 50%;
+        border: 1px solid #00d320;
+        padding: 5px;
+        width: 30px;
+        height: 20px;
+        text-align: center;
+        font-size: 20px;
+        line-height: 20px;
+        margin-bottom: 10px;
+
+
     }
     .container {
         background: #fff;
@@ -43,6 +61,70 @@
         cursor: pointer;
         border: none;
     }
+    input[type = submit]{
+        background-color: #379683;
+        color: white;
+        cursor: pointer;
+        border: none;
+        width: 26%;
+        padding: 10px;
+        margin: auto;
+        border-radius: 4px;
+        margin-top: 10%;
+    }
+/* Custom checkbox style */
+input[type="checkbox"] {
+    /* Hiding the default checkbox */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* Custom dimensions */
+    width: 20px;
+    height: 20px;
+
+    /* Background and border */
+    background-color: #f0f0f0;
+    border: 2px solid #d1d1d1;
+    border-radius: 4px;
+
+    /* Aligning the checkbox */
+    vertical-align: middle;
+    cursor: pointer;
+
+    /* Positioning for the checkmark */
+    position: relative;
+}
+
+/* Style for when the checkbox is checked */
+input[type="checkbox"]:checked {
+    background-color: #f0f0f0; /* Keeps the background color same as unchecked */
+    border: 2px solid #4CAF50; /* Change border color to indicate checked state */
+}
+
+/* Adding checkmark when checked */
+input[type="checkbox"]:checked::after {
+    content: '✔'; /* Unicode checkmark symbol */
+    font-size: 16px; /* Adjust size of the checkmark */
+    position: absolute;
+    top: 0;
+    left: 4px;
+    color: #4CAF50; /* Color of the checkmark */
+}
+
+/* Hover effect */
+input[type="checkbox"]:hover {
+    background-color: #e0e0e0;
+    border-color: #c1c1c1;
+}
+
+/* Focus outline for accessibility */
+input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(21, 156, 228, 0.4);
+}
+
+    
     button:hover {
         background-color: #379683;
     }
@@ -142,27 +224,40 @@
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" readonly ="readonly" class ="rdOnly" >
             <label for="atmotubeApiKey">Atmotube API Key:</label>
-            <input type="text" id="atmotubeApiKey" name="atmotubeApiKey" required>
+            <input type="text" id="atmotubeApiKey" name="atmotubeApiKey" required value ="a1612e8a-4579-4804-9256-afd567293f5c">
             <label for="openHabLink">Your OpenHab link:</label>
-            <input type="text" id="openHabLink" name="openHabLink" required>
+            <input type="text" id="openHabLink" name="openHabLink" required value="http://openhab.ubiquarium.fr/">
+            <label for="AtmotubeId">Your Atmotube MAC ID:</label>
+            <input type="text" id="AtmotubeId" name="AtmotubeId" required value ="F6:76:09:47:38:8C
+            ">
+            <label for="SensorPM10">Your PM10 sensor name:</label>
+            <input type="text" id="SensorPM10" name="SensorPM10" required value ="AirQuality_Pm10_alert">
+            <label for="SensorPM25">Your PM2.5 sensor name:</label>
+            <input type="text" id="SensorPM25" name="SensorPM25" required value ="AirQuality_Pm25_alert">
             <label>Allergies:</label>
-            <div class="tooltip">PM1
-                <input type="checkbox" id="allergyPM1" name="allergyPM1">
-                <span class="tooltiptext">PM1 particles are tiny particles smaller than 1 micron, which can penetrate deep into the lungs.</span>
-            </div>
-            <div class="tooltip">PM2.5
+        
+            <div class="tooltip">
+                PM2.5
                 <input type="checkbox" id="allergyPM25" name="allergyPM25">
-                <span class="tooltiptext">PM2.5 particles are particles smaller than 2.5 microns, known for causing respiratory problems.</span>
+                <i class="fa-solid fa-question-circle" onclick="toggleTooltip('tooltipPM25')"></i>
+                <span id="tooltipPM25" class="tooltiptext">
+                    PM2.5 particles are particles smaller than 2.5 microns, known for causing respiratory problems.
+                </span>
             </div>
-            <div class="tooltip">PM10
+            <div class="tooltip">
+                PM10
                 <input type="checkbox" id="allergyPM10" name="allergyPM10">
-                <span class="tooltiptext">PM10 particles are inhalable particles smaller than 10 microns, including dust and pollen.</span>
+                <i class="fa-solid fa-question-circle" onclick="toggleTooltip('tooltipPM10')"></i>
+                <span id="tooltipPM10" class="tooltiptext">
+                    PM10 particles are inhalable particles smaller than 10 microns, including dust and pollen.
+                </span>
             </div>
+            
         </div>
 
         <div class="section">
             <h3>Home Configuration</h3>
-            <div class="tag-section" id="doorTags">
+            <!-- <div class="tag-section" id="doorTags">
                 <div class="tag-pair">
                     <div class="input-group">
                         <label>Door Tag:</label>
@@ -173,9 +268,8 @@
                         <input type="text" name="doorTagName[]" placeholder="Ex: kitchen door, Bedroom door...">
                     </div>
                 </div>
-                <!-- Placeholder for additional door tags -->
-            </div>
-            <button type="button" class="add-button" onclick="addDoorTag()">Add Door Tags</button>
+            </div> -->
+            <!-- <i class="fa-solid fa-plus" onclick="addDoorTag()"></i> -->
         
             <div class="tag-section" id="windowTags">
                 <div class="tag-pair">
@@ -190,10 +284,11 @@
                 </div>
                 <!-- Placeholder for additional window tags -->
             </div>
-            <button type="button" class="add-button" onclick="addWindowTag()">Add Window Tags</button>
+            <i class="fa-solid fa-plus" onclick="addWindowTag()"></i>
+
         </div>
 
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" class = "submitButton">
     </form>
 </div>
 
@@ -235,6 +330,15 @@ function addDoorTag() {
 
     container.appendChild(tagPair);
 }
+function toggleTooltip(tooltipId) {
+    var tooltip = document.getElementById(tooltipId);
+    if (tooltip.style.visibility === "visible") {
+        tooltip.style.visibility = "hidden";
+    } else {
+        tooltip.style.visibility = "visible";
+    }
+}
+
 
 function addWindowTag() {
     var container = document.getElementById("windowTags");
@@ -267,6 +371,79 @@ function addWindowTag() {
 
     container.appendChild(tagPair);
 }
+function prefillFormData(response) {
+    // Check if the response has properties other than username, email, and password
+    var isAdditionalDataPresent = Object.keys(response).some(key => !['username', 'email', 'password'].includes(key));
+
+    if (isAdditionalDataPresent) {
+        // Iterate over each key in the response and set the form values
+        for (const [key, value] of Object.entries(response)) {
+            // Handle window tags separately
+            if (key === 'windowTagsData') {
+                // Clear existing window tags
+                const windowTagsContainer = document.getElementById('windowTags');
+                windowTagsContainer.innerHTML = '';
+
+                // Add window tags from the response
+                value.forEach(windowTag => {
+                    addWindowTag2(windowTag.tag, windowTag.name);
+                });
+            } else {
+                // For other fields, just set the value
+                const input = document.getElementById(key);
+                if (input) {
+                    if (input.type === 'checkbox') {
+                        input.checked = value; // For checkboxes, set the checked property
+                    } else {
+                        input.value = value; // For other inputs, set the value property
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Modify the addWindowTag function to accept values
+function addWindowTag2(tagValue = '', tagNameValue = '') {
+    var container = document.getElementById("windowTags");
+    var tagPair = document.createElement("div");
+    tagPair.classList.add("tag-pair");
+
+    var tagInputGroup = document.createElement("div");
+    tagInputGroup.classList.add("input-group");
+    var tagLabel = document.createElement("label");
+    tagLabel.textContent = "Window Tag:";
+    var tagInput = document.createElement("input");
+    tagInput.type = "text";
+    tagInput.name = "windowTag[]";
+    tagInput.value = tagValue; // Set the tag value if provided
+    tagInputGroup.appendChild(tagLabel);
+    tagInputGroup.appendChild(tagInput);
+
+    var nameInputGroup = document.createElement("div");
+    nameInputGroup.classList.add("input-group");
+    var nameLabel = document.createElement("label");
+    nameLabel.textContent = "What you want to call it:";
+    var nameInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.name = "windowTagName[]";
+    nameInput.value = tagNameValue; // Set the tag name if provided
+    nameInputGroup.appendChild(nameLabel);
+    nameInputGroup.appendChild(nameInput);
+
+    tagPair.appendChild(tagInputGroup);
+    tagPair.appendChild(nameInputGroup);
+
+    container.appendChild(tagPair);
+}
+document.addEventListener('DOMContentLoaded', function() {
+    var storedData = localStorage.getItem('userData');
+    if (storedData) {
+        var userData = JSON.parse(storedData);
+        prefillFormData(userData);
+        localStorage.removeItem('userData'); // Clear the data if it's no longer needed
+    }
+});
 
 
 document.getElementById('airQualityForm').addEventListener('submit', function(event) {
@@ -327,7 +504,9 @@ document.getElementById('airQualityForm').addEventListener('submit', function(ev
         body: JSON.stringify(data)
     }).then(response => response.json())
       .then(data => {
-          console.log('Success:', data);
+        console.log('Success:', data);
+        window.location.href = "http://localhost:3000/home.html";
+
       })
       .catch((error) => {
           console.error('Error:', error);
