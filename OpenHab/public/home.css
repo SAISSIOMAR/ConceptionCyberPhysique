@@ -11,6 +11,18 @@ main {
     display: grid;
 }
 
+.tag-section{
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tag-pair{
+    background-color: rgba(0,0,0,0.3);
+    padding: 10px;
+    border-radius: 10px;
+}
+
 .button-profile {
     height: 50px;
     width: 50px;

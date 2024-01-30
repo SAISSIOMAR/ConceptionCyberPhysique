@@ -24,7 +24,7 @@ $(document).ready(function() {
         // Send data to Node-RED
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:1880/create-account',
+            url: 'http://'+window.location.hostname +':1880/create-account',
             data: JSON.stringify(userData),
             contentType: 'application/json',
             success: function(response) {
@@ -55,7 +55,7 @@ $(document).ready(function() {
         // Send data to Node-RED
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:1880/sign-in',
+            url: 'http://'+window.location.hostname +':1880/sign-in',
             data: JSON.stringify(userData),
             contentType: 'application/json',
             success: function(response) {
@@ -64,7 +64,7 @@ $(document).ready(function() {
                 localStorage.setItem('userData', JSON.stringify(response));
                 console.log('token', localStorage.getItem('token'));
                 
-                window.location.href = 'http://localhost:3000/home';
+                window.location.href = 'http://'+window.location.hostname+':3000/home';
                 localStorage.setItem('username', userData.username);
 
                 
